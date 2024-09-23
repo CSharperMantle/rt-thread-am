@@ -3,7 +3,7 @@
 #include <klib.h>
 #include <klib-macros.h>
 
-#define AM_APPS_HEAP_SIZE  0x2000000
+#define AM_APPS_HEAP_SIZE  0x20000
 #define RT_HW_HEAP_BEGIN heap.start
 #define RT_HW_HEAP_END heap.end
 

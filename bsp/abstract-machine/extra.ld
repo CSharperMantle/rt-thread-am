@@ -1,3 +1,10 @@
+MEMORY {
+  sram  : ORIGIN = 0x0f000000, LENGTH = 8K
+  mrom  : ORIGIN = 0x20000000, LENGTH = 4K
+  flash : ORIGIN = 0x30000000, LENGTH = 16M
+  psram : ORIGIN = 0x80000000, LENGTH = 4M
+}
+
 SECTIONS {
   .data.extra : {
     /* section information for finsh shell */
@@ -27,12 +34,16 @@ SECTIONS {
     *(__am_apps.sdata*)
     __am_apps_data_end = .;
     . = ALIGN(8);
-  }
+  } > psram AT> flash
+  _data_extra = ADDR(.data.extra);
+  _edata_extra = _data_extra + SIZEOF(.data.extra);
+  _data_extra_load = LOADADDR(.data.extra);
+  _edata_extra_load = _data_extra_load + SIZEOF(.data.extra);
 }
-INSERT BEFORE .data;
+INSERT AFTER .data;
 
 SECTIONS {
-  .bss.extra : {
+  .bss.extra (NOLOAD) : {
     . = ALIGN(8);
     __am_apps_bss_start = .;
     *(__am_apps.bss*)
@@ -40,6 +51,8 @@ SECTIONS {
     *(__am_apps.scommon*)
     __am_apps_bss_end = .;
     . = ALIGN(8);
-  }
+  } > psram
+  _bss_extra_start = ADDR(.bss.extra);
+  _ebss_extra = _bss_extra_start + SIZEOF(.bss.extra);
 }
-INSERT BEFORE .bss;
+INSERT AFTER .bss;
