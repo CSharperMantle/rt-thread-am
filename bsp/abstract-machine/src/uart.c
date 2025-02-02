@@ -39,8 +39,17 @@ static int _uart_putc(struct rt_serial_device *serial, char c) {
 }
 
 static int _uart_getc(struct rt_serial_device *serial) {
-  static const char *const PREDEF_INPUT =
-      "help\ndate\nversion\nfree\nps\npwd\nls\nmemtrace\nmemcheck\nutest_list\n";
+  static const char *const PREDEF_INPUT = "help\n"
+                                          "date\n"
+                                          "version\n"
+                                          "free\n"
+                                          "ps\n"
+                                          "pwd\n"
+                                          "ls\n"
+                                          "memtrace\n"
+                                          "memcheck\n"
+                                          "utest_list\n"
+                                          "shutdown\n";
   static const char *p = PREDEF_INPUT;
   static bool exhausted = false;
 
